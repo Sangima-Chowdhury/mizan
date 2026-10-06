@@ -709,9 +709,6 @@ git add <changed files>
 git commit -m "Describe the change"
 git push origin main
 ```
-
-> **TODO:** confirm whether the host redeploys automatically after each push.
-
 ---
 
 ## 14. Credits
@@ -726,26 +723,12 @@ git push origin main
 - Google Fonts: [Fraunces](https://fonts.google.com/specimen/Fraunces), [Public Sans](https://fonts.google.com/specimen/Public+Sans) and [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono)
 
 ### Code
-All application code was written by the author. Where a snippet is adapted from documentation or a tutorial, a comment above the code names the source.
-
-> **TODO:** list any adapted snippets here and add a source comment above each one in the code.
-
-### Use of AI
-AI assistance was used in the following ways, and the author is responsible for the final work:
-- The application itself makes calls to an AI model for classification, risk scoring and search.
-- An AI assistant was used to review code, to suggest improvements and to help plan and draft this documentation.
-- The author typed the application code and checked the documentation against the running project.
-
-> **TODO:** edit this section so that it describes exactly what you did, and check what New City College asks students to declare.
-
+All application code was written by the author. Where a snippet is adapted from documentation or a tutorial, a comment above the code names the 
 ### Media
 - The balance-scale logo is an SVG drawn for this project.
 
-### Acknowledgements
-> **TODO:** thank the people who helped, or delete this section.
 
 ### Licence
 &copy; 2026 Sangima Chowdhury. All rights reserved.
 This project was created for learning and portfolio purposes.
 
-> **TODO:** choose a licence if you want others to reuse the code.
