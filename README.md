@@ -1,7 +1,8 @@
 # Mizan
 ### *Campaign intake intelligence for trust and safety teams.*
 
-![Review queue showing one pending campaign, average fraud risk 68 and average policy risk 15](docs/screenshots/review-queue.png)
+<img width="1352" height="878" alt="Screenshot 2026-08-07 at 21 58 09" src="https://github.com/user-attachments/assets/eae1aa37-5db2-4778-9839-0590b0db29f6" />
+
 
 **Mizan** is a full-stack web application that helps a moderation team review crowdfunding campaigns faster and more consistently.
 Each submission is read by an AI assistant, classified by Islamic giving type (Zakat, Sadaqah, Waqf or Lillah) and scored separately for **fraud risk** and **policy risk**.
