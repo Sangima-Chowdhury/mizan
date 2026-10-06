@@ -265,19 +265,23 @@ The Submit Campaign tab shows a short form with two required fields and one clea
 ### User Stories 4 and 5: Review Queue and Decisions
 The Review Queue tab shows the pending count, the average fraud and policy risk, and a card for each campaign.
 
-![Review queue](docs/screenshots/review-queue.png)
+<img width="1352" height="878" alt="Screenshot 2026-10-06 at 11 24 49" src="https://github.com/user-attachments/assets/2e38fd7e-756d-4a8f-979d-03384d3cad80" />
+
 
 > **TODO:** add `decision-form.png`, a screenshot of an expanded card showing the gauges, flags and the Approve, Escalate and Reject buttons.
 
 ### User Story 6: Audit Trail
 The History tab lists past decisions with the reviewer, the decision and any notes.
 
-![Decision history](docs/screenshots/decision-history.png)
+<img width="1352" height="878" alt="Screenshot 2026-10-06 at 11 26 22" src="https://github.com/user-attachments/assets/9d4a6f05-0268-4d46-b06b-c06eaa945a85" />
+
 
 ### User Story 7: Ask Mizan
 The Ask Mizan tab answers a plain-English question and shows which filters were used and how many results were found.
 
-![Ask Mizan answering a question about a campaign](docs/screenshots/ask-mizan.png)
+<img width="1352" height="878" alt="Screenshot 2026-09-27 at 21 16 41" src="https://github.com/user-attachments/assets/6c501e79-de89-4708-a328-20f9973a1125" />
+<img width="1352" height="878" alt="Screenshot 2026-10-06 at 11 24 54" src="https://github.com/user-attachments/assets/21430865-699c-48c4-b495-8dff8c0e1d0f" />
+
 
 ---
 
