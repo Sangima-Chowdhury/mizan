@@ -258,7 +258,7 @@ It aims to:
 ### User Story 1: Submit a Campaign
 The Submit Campaign tab shows a short form with two required fields and one clear button.
 
-![Submit campaign form](docs/screenshots/submit-campaign.png)
+<img width="1352" height="878" alt="Screenshot 2026-08-07 at 21 58 09" src="https://github.com/user-attachments/assets/eae1aa37-5db2-4778-9839-0590b0db29f6" />
 
 > **TODO:** add `submit-result.png`, a screenshot of the result panel after a successful submission (category, confidence, both risk gauges and flags).
 
@@ -279,9 +279,10 @@ The History tab lists past decisions with the reviewer, the decision and any not
 ### User Story 7: Ask Mizan
 The Ask Mizan tab answers a plain-English question and shows which filters were used and how many results were found.
 
-<img width="1352" height="878" alt="Screenshot 2026-09-27 at 21 16 41" src="https://github.com/user-attachments/assets/6c501e79-de89-4708-a328-20f9973a1125" />
+
 <img width="1352" height="878" alt="Screenshot 2026-10-06 at 11 24 54" src="https://github.com/user-attachments/assets/21430865-699c-48c4-b495-8dff8c0e1d0f" />
 
+<img width="1352" height="878" alt="Screenshot 2026-10-06 at 11 25 36" src="https://github.com/user-attachments/assets/7425cdf4-546b-45ac-8184-f22c86e07239" />
 
 ---
 
