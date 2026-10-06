@@ -20,7 +20,7 @@ It is an independent project and is **not affiliated with, or endorsed by, any o
 
 > The live demo is open, uses demo data and has no login. Please do not enter real personal information.
 
-> **TODO:** check that the repository link above opens your real `mizan` repo.
+
 
 ---
 
