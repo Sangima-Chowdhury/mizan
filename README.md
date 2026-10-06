@@ -256,14 +256,14 @@ It aims to:
 
 ## 4. Screenshots and User Story Alignment
 
-> **TODO:** save your screenshots in `docs/screenshots/` using the lowercase filenames below. Remove any TODO note once its screenshot is added.
+
 
 ### User Story 1: Submit a Campaign
 The Submit Campaign tab shows a short form with two required fields and one clear button.
 
 <img width="1352" height="878" alt="Screenshot 2026-08-07 at 21 58 09" src="https://github.com/user-attachments/assets/eae1aa37-5db2-4778-9839-0590b0db29f6" />
 
-> **TODO:** add `submit-result.png`, a screenshot of the result panel after a successful submission (category, confidence, both risk gauges and flags).
+
 
 ### User Stories 4 and 5: Review Queue and Decisions
 The Review Queue tab shows the pending count, the average fraud and policy risk, and a card for each campaign.
@@ -271,8 +271,7 @@ The Review Queue tab shows the pending count, the average fraud and policy risk,
 <img width="1352" height="878" alt="Screenshot 2026-10-06 at 11 24 49" src="https://github.com/user-attachments/assets/2e38fd7e-756d-4a8f-979d-03384d3cad80" />
 
 
-> **TODO:** add `decision-form.png`, a screenshot of an expanded card showing the gauges, flags and the Approve, Escalate and Reject buttons.
-
+ 
 ### User Story 6: Audit Trail
 The History tab lists past decisions with the reviewer, the decision and any notes.
 
@@ -352,7 +351,7 @@ These choices go against accepted UX, accessibility or security practice. They a
 | A browser `alert()` appears if a decision fails to save | Quick and unmistakable | Show an inline message beside the buttons |
 | White text on the brass accent colour may not meet contrast guidelines | Chosen for the visual identity | Darken the accent, then re-test |
 
-> **TODO:** check the last row with the WebAIM Contrast Checker and record the actual ratio.
+
 
 ---
 
@@ -400,9 +399,7 @@ The logo in the header is an SVG balance. When the review queue loads, the beam 
 - The layout adapts at 640 pixels wide: the statistics stack and the risk gauges sit in a column.
 
 ### Design Process
-Mizan's interface was designed directly in code in a single build session, so there are no wireframes from before the build.
-
-> **TODO:** if you want design evidence, add wireframes to `docs/wireframes/` and label them clearly as retrospective, or delete this note.
+Mizan's interface was designed directly in code in a single build session, so there are no wireframes from before.
 
 ---
 
@@ -552,7 +549,7 @@ Database configuration lives in one place: `database.py` reads `DATABASE_URL` fr
 - `/ask` and `/submit` spend API credit and have no rate limit.
 - A determined submitter could try to write campaign text that influences the AI. The human decision step limits the harm but does not remove the risk.
 
-> **TODO:** make debug mode depend on an environment variable, then update the first line of the "In place" list.
+
 
 ---
 
@@ -584,7 +581,7 @@ Database configuration lives in one place: `database.py` reads `DATABASE_URL` fr
 **Honest note on version control:** Mizan was first built in a single intensive session before it was placed under git, so the commit history starts with a working project.
 It was then committed in logical steps (database, classifier, risk scorer, search tool, routes, dashboard), and later changes are made as small, separate commits.
 
-> **TODO:** after the last commits are pushed, check that the commit list reads clearly and that no commit is huge.
+
 
 ---
 
@@ -635,8 +632,6 @@ Testing is manual and follows the plan below. Each test has a step, an expected 
 ---
 
 ## 13. Deployment
-
-> **TODO:** check every value in this section against your real hosting settings before submitting.
 
 ### Creating the GitHub Repository
 1. Log in to GitHub and choose **New repository**.
@@ -723,7 +718,7 @@ git push origin main
 - Google Fonts: [Fraunces](https://fonts.google.com/specimen/Fraunces), [Public Sans](https://fonts.google.com/specimen/Public+Sans) and [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono)
 
 ### Code
-All application code was written by the author. Where a snippet is adapted from documentation or a tutorial, a comment above the code names the 
+All application code was written by the author. Where a snippet is adapted from documentation or a tutorial.
 ### Media
 - The balance-scale logo is an SVG drawn for this project.
 
