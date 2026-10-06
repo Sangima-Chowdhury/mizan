@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mizan — Campaign Intake Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8F5EF;
+    --surface: #FFFFFF;
+    --surface-raised: #F1EBDC;
+    --border: #E6DFCD;
+    --text: #262019;
+    --text-dim: #7C7566;
+    --brass: #B9873E;
+    --brass-soft: #D6AC68;
+    --brass-tint: rgba(185,135,62,0.10);
+    --verdigris: #4F8A67;
+    --verdigris-tint: rgba(79,138,103,0.10);
+    --rust: #B14A32;
+    --rust-tint: rgba(177,74,50,0.10);
+    --plum: #7A5F92;
+    --plum-tint: rgba(122,95,146,0.10);
+    --ink-fixed: #201B14;
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Public Sans', -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  a { color: inherit; }
+
+  /* ---------- Header ---------- */
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    color: var(--ink-fixed);
+  }
+
+  .brand .tagline {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 2px;
+  }
+
+  #scale-svg { display: block; }
+  #scale-beam {
+    transform-origin: 50px 38px;
+    transition: transform 0.9s cubic-bezier(0.34, 1.2, 0.4, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #scale-beam { transition: none; }
+  }
+
+  nav {
+    display: flex;
+    gap: 4px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  nav button {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-dim);
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  nav button.active {
+    background: var(--brass);
+    color: #FFFFFF;
+  }
+
+  nav button:not(.active):hover {
+    color: var(--text);
+  }
+
+  /* ---------- Layout ---------- */
+
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--brass);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--ink-fixed);
+  }
+
+  .subhead {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 32px;
+    max-width: 52ch;
+  }
+
+  /* ---------- Stats bar ---------- */
+
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 1px 2px rgba(38,32,25,0.04);
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 16px 20px;
+  }
+
+  .stat .value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink-fixed);
+  }
+
+  .stat .label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* ---------- Submit form ---------- */
+
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(38,32,25,0.05);
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .field { margin-bottom: 20px; }
+
+  input[type="text"], textarea {
+    width: 100%;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    resize: vertical;
+  }
+
+  textarea { min-height: 110px; }
+
+  input:focus, textarea:focus, button:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 1px;
+  }
+
+  input::placeholder, textarea::placeholder { color: #A69F8F; }
+
+  .btn-primary {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    background: var(--brass);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-primary:hover { background: #A87735; }
+  .btn-primary:disabled { opacity: 0.5; cursor: default; }
+
+  /* ---------- Result panel ---------- */
+
+  #submit-result, #ask-result {
+    display: none;
+    margin-top: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(38,32,25,0.05);
+  }
+
+  #submit-result.show, #ask-result.show { display: block; animation: reveal 0.4s ease; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    #submit-result.show, #ask-result.show { animation: none; }
+  }
+
+  .query-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-dim);
+  }
+
+  .query-meta strong { color: var(--ink-fixed); }
+
+  .answer-text {
+    font-size: 14.5px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: var(--ink-fixed);
+  }
+
+  .result-header .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--verdigris);
+  }
+
+  /* ---------- Badges ---------- */
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--brass);
+    color: var(--brass);
+    background: var(--brass-tint);
+  }
+
+  .badge.decision-approved { border-color: var(--verdigris); color: var(--verdigris); background: var(--verdigris-tint); }
+  .badge.decision-rejected { border-color: var(--rust); color: var(--rust); background: var(--rust-tint); }
+  .badge.decision-escalated { border-color: var(--plum); color: var(--plum); background: var(--plum-tint); }
+
+  .history-notes {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* ---------- Risk gauges ---------- */
+
+  .risk-row {
+    display: flex;
+    gap: 24px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .gauge { flex: 1; min-width: 180px; }
+
+  .gauge-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  .gauge-label .score { font-family: var(--font-mono); color: var(--ink-fixed); }
+
+  .gauge-track {
+    height: 6px;
+    background: var(--surface-raised);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .gauge-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
+  .flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .flag-pill {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-dim);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    padding: 4px 9px;
+    border-radius: 6px;
+  }
+
+  /* ---------- Queue cards ---------- */
+
+  #queue-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 3px rgba(38,32,25,0.05);
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 6px;
+    color: var(--ink-fixed);
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .confidence {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .card-desc {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    margin-top: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card.expanded .card-desc {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+
+  .card-detail {
+    display: none;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card.expanded .card-detail { display: block; }
+
+  .timestamp {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  /* ---------- Decision form ---------- */
+
+  .decision-form { margin-top: 18px; }
+
+  .decision-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-decision {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 8px;
+    padding: 10px 18px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .btn-decision[data-decision="approved"] {
+    background: var(--verdigris-tint); color: var(--verdigris); border-color: var(--verdigris);
+  }
+  .btn-decision[data-decision="approved"]:hover { background: var(--verdigris); color: #FFFFFF; }
+
+  .btn-decision[data-decision="escalated"] {
+    background: var(--plum-tint); color: var(--plum); border-color: var(--plum);
+  }
+  .btn-decision[data-decision="escalated"]:hover { background: var(--plum); color: #FFFFFF; }
+
+  .btn-decision[data-decision="rejected"] {
+    background: var(--rust-tint); color: var(--rust); border-color: var(--rust);
+  }
+  .btn-decision[data-decision="rejected"]:hover { background: var(--rust); color: #FFFFFF; }
+
+  .btn-decision:disabled { opacity: 0.5; cursor: default; }
+
+  /* ---------- Empty / error / loading states ---------- */
+
+  .state-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-dim);
+  }
+
+  .state-message .icon { font-size: 28px; margin-bottom: 12px; display: block; }
+  .state-message .title { font-family: var(--font-display); font-size: 18px; color: var(--ink-fixed); margin-bottom: 6px; }
+  .state-message.error .title { color: var(--rust); }
+
+  @media (max-width: 640px) {
+    header { padding: 16px 20px; }
+    main { padding: 28px 16px 60px; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .risk-row { flex-direction: column; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg id="scale-svg" width="60" height="52" viewBox="0 0 100 84" fill="none">
+      <line x1="50" y1="8" x2="50" y2="76" stroke="#C9A063" stroke-width="3" stroke-linecap="round"/>
+      <rect x="40" y="72" width="20" height="6" rx="2" fill="#C9A063"/>
+      <g id="scale-beam">
+        <line x1="14" y1="38" x2="86" y2="38" stroke="var(--brass)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="50" cy="38" r="4" fill="var(--brass)"/>
+        <line x1="14" y1="38" x2="14" y2="54" stroke="#C9A063" stroke-width="2"/>
+        <path d="M4 54 Q14 68 24 54 Z" fill="none" stroke="var(--brass)" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="86" y1="38" x2="86" y2="54" stroke="#C9A063" stroke-width="2"/>
+        <path d="M76 54 Q86 68 96 54 Z" fill="none" stroke="var(--brass)" stroke-width="2.5" stroke-linejoin="round"/>
+      </g>
+    </svg>
+    <div>
+      <h1>Mizan</h1>
+      <div class="tagline">Campaign Intake Intelligence</div>
+    </div>
+  </div>
+  <nav>
+    <button id="tab-submit" class="active">Submit Campaign</button>
+    <button id="tab-queue">Review Queue</button>
+    <button id="tab-ask">Ask Mizan</button>
+    <button id="tab-history">History</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===== SUBMIT VIEW ===== -->
+  <section id="view-submit" class="view active">
+    <div class="eyebrow">Public Intake</div>
+    <h2>Submit a campaign</h2>
+    <p class="subhead">Every submission is read by Mizan before a human ever sees it — classified by giving type, then assessed for fraud and policy risk.</p>
+
+    <form id="submit-form" class="form-card">
+      <div class="field">
+        <label for="title">Campaign title</label>
+        <input type="text" id="title" name="title" placeholder="e.g. Emergency Medical Fund for Amina" required>
+      </div>
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Describe the need, who it helps, and how funds will be used." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary" id="submit-btn">Submit for review</button>
+    </form>
+
+    <div id="submit-result"></div>
+  </section>
+
+  <!-- ===== QUEUE VIEW ===== -->
+  <section id="view-queue" class="view">
+    <div class="eyebrow">Human-in-the-Loop</div>
+    <h2>Review queue</h2>
+    <p class="subhead">Mizan proposes a category and a risk assessment. Nothing goes live until a moderator decides.</p>
+
+    <div class="stats-bar" id="stats-bar"></div>
+    <div id="queue-list"></div>
+  </section>
+
+  <!-- ===== ASK VIEW ===== -->
+  <section id="view-ask" class="view">
+    <div class="eyebrow">Moderator Assistant</div>
+    <h2>Ask Mizan</h2>
+    <p class="subhead">Can't remember an exact campaign name or date? Ask in plain language — Mizan searches the real database and answers only from what it finds.</p>
+
+    <form id="ask-form" class="form-card">
+      <div class="field">
+        <label for="question">Your question</label>
+        <input type="text" id="question" name="question" placeholder="e.g. Show me any campaigns with high fraud risk" required>
+      </div>
+      <button type="submit" class="btn-primary" id="ask-btn">Ask</button>
+    </form>
+
+    <div id="ask-result"></div>
+  </section>
+
+  <!-- ===== HISTORY VIEW ===== -->
+  <section id="view-history" class="view">
+    <div class="eyebrow">Audit Trail</div>
+    <h2>Decision history</h2>
+    <p class="subhead">Every decision a moderator has made, permanently — nothing here is ever deleted, only added to.</p>
+
+    <div id="history-list"></div>
+  </section>
+
+</main>
+
+<script>
+  const API = { submit: '/submit', dashboard: '/dashboard', decide: (id) => `/decide/${id}`, ask: '/ask', history: '/history' };
+
+  // ---------- Tab switching ----------
+  const tabs = {
+    submit:  { btn: document.getElementById('tab-submit'),  view: document.getElementById('view-submit') },
+    queue:   { btn: document.getElementById('tab-queue'),   view: document.getElementById('view-queue') },
+    ask:     { btn: document.getElementById('tab-ask'),     view: document.getElementById('view-ask') },
+    history: { btn: document.getElementById('tab-history'), view: document.getElementById('view-history') }
+  };
+
+  function showView(name) {
+    Object.entries(tabs).forEach(([key, { btn, view }]) => {
+      const active = key === name;
+      btn.classList.toggle('active', active);
+      view.classList.toggle('active', active);
+    });
+    if (name === 'queue') fetchQueue();
+    if (name === 'history') fetchHistory();
+  }
+  tabs.submit.btn.addEventListener('click', () => showView('submit'));
+  tabs.queue.btn.addEventListener('click', () => showView('queue'));
+  tabs.ask.btn.addEventListener('click', () => showView('ask'));
+  tabs.history.btn.addEventListener('click', () => showView('history'));
+
+  // ---------- Helpers ----------
+  function riskColor(score) {
+    if (score === null || score === undefined) return 'var(--text-dim)';
+    if (score < 34) return 'var(--verdigris)';
+    if (score < 67) return 'var(--brass)';
+    return 'var(--rust)';
+  }
+
+  function formatTime(iso) {
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str ?? '';
+    return div.innerHTML;
+  }
+
+  function tiltScale(avgFraud, avgPolicy) {
+    const beam = document.getElementById('scale-beam');
+    if (avgFraud === null) { beam.style.transform = 'rotate(0deg)'; return; }
+    const diff = avgFraud - avgPolicy;
+    const angle = Math.max(-12, Math.min(12, diff / 6));
+    beam.style.transform = `rotate(${angle}deg)`;
+  }
+
+  function gaugeRow(fraud, policy) {
+    const f = fraud === null || fraud === undefined ? null : Number(fraud);
+    const p = policy === null || policy === undefined ? null : Number(policy);
+    const bar = (label, val) => `
+      <div class="gauge">
+        <div class="gauge-label"><span>${label}</span><span class="score">${val === null ? '—' : val}</span></div>
+        <div class="gauge-track"><div class="gauge-fill" style="width:${val ?? 0}%; background:${riskColor(val)}"></div></div>
+      </div>`;
+    return `<div class="risk-row">${bar('Fraud Risk', f)}${bar('Policy Risk', p)}</div>`;
+  }
+
+  // ---------- Submit form ----------
+  const submitForm = document.getElementById('submit-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const resultBox = document.getElementById('submit-result');
+
+  submitForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Analyzing…';
+    resultBox.classList.remove('show');
+
+    const formData = new FormData(submitForm);
+    try {
+      const res = await fetch(API.submit, { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Submission failed.');
+
+      const flags = (data.risk_flags || []).map(f => `<span class="flag-pill">${escapeHtml(f)}</span>`).join('');
+      resultBox.innerHTML = `
+        <div class="result-header"><span class="dot"></span><strong>Submitted — pending human review</strong></div>
+        <span class="badge">${escapeHtml(data.category)} · ${Math.round(data.confidence)}% confidence</span>
+        ${gaugeRow(data.fraud_risk_score, data.policy_risk_score)}
+        ${flags ? `<div class="flags">${flags}</div>` : ''}
+      `;
+      resultBox.classList.add('show');
+      submitForm.reset();
+    } catch (err) {
+      resultBox.innerHTML = `
+        <div class="state-message error">
+          <span class="icon">⚠</span>
+          <div class="title">Couldn't submit this campaign</div>
+          <div>${escapeHtml(err.message)}</div>
+        </div>`;
+      resultBox.classList.add('show');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit for review';
+    }
+  });
+
+  // ---------- Ask Mizan ----------
+  const askForm = document.getElementById('ask-form');
+  const askBtn = document.getElementById('ask-btn');
+  const askResult = document.getElementById('ask-result');
+
+  function formatFilters(filters) {
+    if (!filters || Object.keys(filters).length === 0) return null;
+    return Object.entries(filters).map(([k, v]) => `${k} = ${v}`).join('  ·  ');
+  }
+
+  askForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    askBtn.disabled = true;
+    askBtn.textContent = 'Asking Mizan…';
+    askResult.classList.remove('show');
+
+    const formData = new FormData(askForm);
+    try {
+      const res = await fetch(API.ask, { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'The assistant could not answer that.');
+
+      const filterLine = formatFilters(data.filters_used);
+      askResult.innerHTML = `
+        <div class="answer-text">${escapeHtml(data.answer)}</div>
+        ${filterLine ? `
+          <div class="query-meta">
+            <span><strong>Searched using:</strong> ${escapeHtml(filterLine)}</span>
+            <span><strong>${data.result_count}</strong> result${data.result_count === 1 ? '' : 's'} found</span>
+          </div>` : ''}
+      `;
+      askResult.classList.add('show');
+    } catch (err) {
+      askResult.innerHTML = `
+        <div class="state-message error">
+          <span class="icon">⚠</span>
+          <div class="title">Couldn't get an answer</div>
+          <div>${escapeHtml(err.message)}</div>
+        </div>`;
+      askResult.classList.add('show');
+    } finally {
+      askBtn.disabled = false;
+      askBtn.textContent = 'Ask';
+    }
+  });
+
+  // ---------- Queue ----------
+  const queueList = document.getElementById('queue-list');
+  const statsBar = document.getElementById('stats-bar');
+
+  async function fetchQueue() {
+    queueList.innerHTML = `<div class="state-message"><span class="icon">⚖</span><div class="title">Loading the queue…</div></div>`;
+    try {
+      const res = await fetch(API.dashboard);
+      if (!res.ok) throw new Error('Server returned an error.');
+      const data = await res.json();
+      renderQueue(data.campaigns || []);
+    } catch (err) {
+      queueList.innerHTML = `
+        <div class="state-message error">
+          <span class="icon">⚠</span>
+          <div class="title">Couldn't reach the Mizan server</div>
+          <div>Check that app.py is running, then reload this page.</div>
+        </div>`;
+      statsBar.innerHTML = '';
+    }
+  }
+
+  function renderQueue(campaigns) {
+    const scored = campaigns.filter(c => c.fraud_risk_score !== null && c.fraud_risk_score !== undefined);
+    const avgFraud = scored.length ? Math.round(scored.reduce((s, c) => s + Number(c.fraud_risk_score), 0) / scored.length) : null;
+    const avgPolicy = scored.length ? Math.round(scored.reduce((s, c) => s + Number(c.policy_risk_score), 0) / scored.length) : null;
+    tiltScale(avgFraud, avgPolicy);
+
+    statsBar.innerHTML = `
+      <div class="stat"><div class="value">${campaigns.length}</div><div class="label">Pending Review</div></div>
+      <div class="stat"><div class="value" style="color:${riskColor(avgFraud)}">${avgFraud ?? '—'}</div><div class="label">Avg Fraud Risk</div></div>
+      <div class="stat"><div class="value" style="color:${riskColor(avgPolicy)}">${avgPolicy ?? '—'}</div><div class="label">Avg Policy Risk</div></div>
+    `;
+
+    if (campaigns.length === 0) {
+      queueList.innerHTML = `
+        <div class="state-message">
+          <span class="icon">⚖</span>
+          <div class="title">Queue is clear</div>
+          <div>Every submitted campaign has been reviewed. New submissions will appear here automatically.</div>
+        </div>`;
+      return;
+    }
+
+    queueList.innerHTML = campaigns.map(c => cardHtml(c)).join('');
+
+    campaigns.forEach(c => {
+      const card = document.getElementById(`card-${c.id}`);
+      card.querySelector('.card-top').addEventListener('click', () => card.classList.toggle('expanded'));
+
+      card.querySelectorAll('.btn-decision').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const decision = btn.dataset.decision;
+          const nameInput = card.querySelector('.moderator-name');
+          const notesInput = card.querySelector('.moderator-notes');
+          if (!nameInput.value.trim()) { nameInput.focus(); return; }
+
+          card.querySelectorAll('.btn-decision').forEach(b => b.disabled = true);
+          btn.textContent = 'Saving…';
+
+          const fd = new FormData();
+          fd.append('moderator_name', nameInput.value.trim());
+          fd.append('decision', decision);
+          fd.append('notes', notesInput.value.trim());
+
+          try {
+            const res = await fetch(API.decide(c.id), { method: 'POST', body: fd });
+            if (!res.ok) throw new Error();
+            fetchQueue();
+          } catch {
+            card.querySelectorAll('.btn-decision').forEach(b => b.disabled = false);
+            btn.textContent = decision.charAt(0).toUpperCase() + decision.slice(1);
+            alert("Couldn't save this decision. Check the server and try again.");
+          }
+        });
+      });
+    });
+  }
+
+  function cardHtml(c) {
+    const flags = (c.risk_flags || []).map(f => `<span class="flag-pill">${escapeHtml(f)}</span>`).join('');
+    const conf = c.category_confidence !== null ? `${Math.round(Number(c.category_confidence))}%` : '—';
+    return `
+      <div class="card" id="card-${c.id}">
+        <div class="card-top">
+          <div>
+            <div class="card-title">${escapeHtml(c.title)}</div>
+            <div class="card-meta">
+              <span class="badge">${escapeHtml(c.category || 'uncategorized')}</span>
+              <span class="confidence">${conf} confidence</span>
+            </div>
+            <div class="card-desc">${escapeHtml(c.description)}</div>
+          </div>
+          <span class="timestamp">${formatTime(c.submitted_at)}</span>
+        </div>
+
+        <div class="card-detail">
+          ${gaugeRow(c.fraud_risk_score, c.policy_risk_score)}
+          ${flags ? `<div class="flags">${flags}</div>` : '<div class="flags"><span class="flag-pill">no risk flags raised</span></div>'}
+
+          <div class="decision-form">
+            <div class="field">
+              <label>Moderator name</label>
+              <input type="text" class="moderator-name" placeholder="Your name">
+            </div>
+            <div class="field">
+              <label>Notes (optional)</label>
+              <textarea class="moderator-notes" placeholder="Reasoning for this decision…" style="min-height:70px"></textarea>
+            </div>
+            <div class="decision-actions">
+              <button class="btn-decision" data-decision="approved">Approve</button>
+              <button class="btn-decision" data-decision="escalated">Escalate</button>
+              <button class="btn-decision" data-decision="rejected">Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ---------- History ----------
+  const historyList = document.getElementById('history-list');
+
+  async function fetchHistory() {
+    historyList.innerHTML = `<div class="state-message"><span class="icon">⚖</span><div class="title">Loading history…</div></div>`;
+    try {
+      const res = await fetch(API.history);
+      if (!res.ok) throw new Error('Server returned an error.');
+      const data = await res.json();
+      renderHistory(data.history || []);
+    } catch (err) {
+      historyList.innerHTML = `
+        <div class="state-message error">
+          <span class="icon">⚠</span>
+          <div class="title">Couldn't reach the Mizan server</div>
+          <div>Check that app.py is running, then reload this page.</div>
+        </div>`;
+    }
+  }
+
+  function renderHistory(records) {
+    if (records.length === 0) {
+      historyList.innerHTML = `
+        <div class="state-message">
+          <span class="icon">⚖</span>
+          <div class="title">No decisions recorded yet</div>
+          <div>Once a moderator approves, rejects, or escalates a campaign, it'll appear here permanently.</div>
+        </div>`;
+      return;
+    }
+    historyList.innerHTML = records.map(r => historyCardHtml(r)).join('');
+  }
+
+  function historyCardHtml(r) {
+    return `
+      <div class="card">
+        <div class="card-top" style="cursor:default">
+          <div>
+            <div class="card-title">${escapeHtml(r.title)}</div>
+            <div class="card-meta">
+              <span class="badge">${escapeHtml(r.category || 'uncategorized')}</span>
+              <span class="badge decision-${escapeHtml(r.decision)}">${escapeHtml(r.decision)}</span>
+            </div>
+            <div class="card-desc" style="-webkit-line-clamp: unset;">${escapeHtml(r.description)}</div>
+            ${r.notes ? `<div class="history-notes">"${escapeHtml(r.notes)}"</div>` : ''}
+          </div>
+          <span class="timestamp">${formatTime(r.decided_at)}</span>
+        </div>
+        ${gaugeRow(r.fraud_risk_score, r.policy_risk_score)}
+        <div class="query-meta"><span><strong>Reviewed by</strong> ${escapeHtml(r.moderator_name)}</span></div>
+      </div>`;
+  }
+</script>
+
+</body>
+</html>
