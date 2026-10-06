@@ -1,7 +1,10 @@
 # Mizan
 ### *Campaign intake intelligence for trust and safety teams.*
 
-<img width="1352" height="878" alt="Screenshot 2026-08-07 at 21 58 09" src="https://github.com/user-attachments/assets/eae1aa37-5db2-4778-9839-0590b0db29f6" />
+
+
+<img width="3200" height="1280" alt="mizan-banner" src="https://github.com/user-attachments/assets/c21ad2bd-a30f-4eda-892b-7a9e9f7fa112" />
+
 
 
 **Mizan** is a full-stack web application that helps a moderation team review crowdfunding campaigns faster and more consistently.
